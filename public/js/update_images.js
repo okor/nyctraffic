@@ -60,7 +60,10 @@ $(function(){
   //     console.log(val)
   // })
 
+  var pause = false
+  var interval_id = null
   var cam_template = "<div class='cam'><span>{{name}}</span><img src='{{url}}' /></div>"
+
 
   function appendRender(){
     // Clear all old views
@@ -76,14 +79,34 @@ $(function(){
     })
   } 
 
+  function start(){
+    interval_id = setInterval(function(){
+      appendRender()
+    }, 5000)
+  }
+
+  function stop(){
+    clearInterval(interval_id)
+  }
+
+  function toggle_pause(){
+    if (pause == false){
+      pause = true
+      clearInterval(interval_id)
+    } else {
+      pause = false
+      start()
+    }
+  }
+
+  // bind toggle_pause to pause button
+  $("#pause").click(function(){
+    toggle_pause()
+  })
 
   // Run it
   appendRender()
-  setInterval(function(){
-    appendRender()
-  }, 5000)
-
-
+  start()
 
 })
 

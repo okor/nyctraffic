@@ -8,6 +8,19 @@ body {
   margin: 50px auto 50px auto;
 }
 
+#controls{
+  font-size: 3em;
+  background: white;
+  padding: 0.2em;
+  border-radius: 2px;
+}
+
+#pause{
+  color: gray;
+  display: block;
+  text-decoration: none;
+}
+
 .cam {
   float: left;
 /*  width: 352px;
