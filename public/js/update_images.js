@@ -49,7 +49,7 @@ $(function(){
     { name: "WBB-16 @ SOR Bklyn Kent Ave", url: "http://207.251.86.238/cctv371.jpg" }, 
     { name: "WBB-18 @ SOR Cntr Span", url: "http://207.251.86.238/cctv373.jpg" }, 
     { name: "WBB-19 @ Bklyn Tower", url: "http://207.251.86.238/cctv374.jpg" }, 
-    { name: "WBB-2 @ NOR Bklyn-Driggs", url: "http://207.251.86.1.238/cctv357.jpg" }, 
+    // { name: "WBB-2 @ NOR Bklyn-Driggs", url: "http://207.251.86.1.238/cctv357.jpg" }, 
     { name: "WBB-4 @ NOR Bklyn-Mid Span", url: "http://207.251.86.238/cctv359.jpg" }, 
     { name: "WBB-6 @ Delancy-Clinton", url: "http://207.251.86.238/cctv361.jpg" } 
   ]
@@ -62,7 +62,8 @@ $(function(){
 
   var pause = false
   var interval_id = null
-  var cam_template = "<div class='cam'><span>{{name}}</span><img src='{{url}}' /></div>"
+  // var cam_template = "<div class='cam'><span>{{name}}</span><img src='{{url}}' /></div>"
+  var cam_template = "<div class='cam'><img src='{{url}}' /><span>{{name}}</span></div>"
 
 
   function appendRender(){
@@ -70,12 +71,14 @@ $(function(){
     $("#cams").html("")
     // Update view for each cam
     $.each(brooklyn_cams, function(index, cam){
-      cam_details = {
-        name: cam['name'],
-        url: cam['url']
+        cam_details = {
+          name: cam['name'],
+          url: cam['url']
+        }
+      if (cam_details['url'] !== ""){
+        html = Mustache.to_html(cam_template, cam_details)
+        $("#cams").append(html)
       }
-      html = Mustache.to_html(cam_template, cam_details)
-      $("#cams").append(html)
     })
   } 
 
