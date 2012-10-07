@@ -313,6 +313,8 @@ $(function(){
 
   var pause = false
   var interval_id = null
+  var selected_region = brooklyn_cams
+  var update_interval = 3000
   var cam_template = "<div class='cam'><img src='{{url}}{{time}}' /><span title='{{name}}'>{{short_name}}</span></div>"
 
 
@@ -344,11 +346,11 @@ $(function(){
     })
   } 
 
-  function start(region){
-    appendRender(region)
+  function start(selected_region){
+    appendRender(selected_region)
     interval_id = setInterval(function(){
       update_images()
-    }, 5000)
+    }, update_interval)
   }
 
   function stop(){
@@ -363,7 +365,7 @@ $(function(){
     } else {
       $(button).removeClass('icon-play').addClass('icon-pause')
       pause = false
-      start()
+      start(selected_region)
     }
   }
 
@@ -372,15 +374,24 @@ $(function(){
     toggle_pause(this)
   })
 
+  // update the region
   $("#region_chooser").bind('change', function(){
-    region = eval( $(this).find('option:selected').val() )
-    console.log(region)
+    selected_region = eval( $(this).find('option:selected').val() )
     stop()
-    start(region)
+    start(selected_region)
   })
 
+  // update the update interval
+  $("#interval_chooser").bind('change', function(){
+    update_interval = eval( $(this).find('option:selected').val() )
+    stop()
+    start(selected_region)
+  })
+
+  // update the size selection
+
   // Run it
-  start(brooklyn_cams)
+  start(selected_region)
   update_images()
 
 })

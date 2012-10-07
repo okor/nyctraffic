@@ -16,7 +16,7 @@ body {
   padding: 10px 10px 3px 10px;
   border-radius: 2px;
   margin: 0 auto 25px auto;
-  width: 200px;
+  width: 600px;
 
   box-shadow: 0 0 10px #000;
   background: #d8d7d4; /* Old browsers */
@@ -42,13 +42,14 @@ body {
   text-shadow: 0 0 2px rgba(0,0,0,0.8);
 }
 
-#controls select {
+#controls select,
+#controls label {
+  font-size: 1.5em;
   float: left;
+  margin: 0 10px 0 0;
 }
 
-option {
-  font-size: 40px;
-  }
+
 
 #controls a:hover {
   text-shadow: 0 0 10px rgba(0,0,0,0.8);
