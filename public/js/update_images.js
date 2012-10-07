@@ -48,7 +48,8 @@ $(function(){
     { name: "WBB-14 @ NIR Bklyn Kent Ave", url: "http://207.251.86.238/cctv369.jpg" }, 
     { name: "WBB-16 @ SOR Bklyn Kent Ave", url: "http://207.251.86.238/cctv371.jpg" }, 
     { name: "WBB-18 @ SOR Cntr Span", url: "http://207.251.86.238/cctv373.jpg" }, 
-    { name: "WBB-19 @ Bklyn Tower", url: "http://207.251.86.238/cctv374.jpg" }, 
+    { name: "WBB-19 @ Bklyn Tower", url: "http://207.251.86.238/cctv374.jpg" },
+    // Shit right here is broke! 
     // { name: "WBB-2 @ NOR Bklyn-Driggs", url: "http://207.251.86.1.238/cctv357.jpg" }, 
     { name: "WBB-4 @ NOR Bklyn-Mid Span", url: "http://207.251.86.238/cctv359.jpg" }, 
     { name: "WBB-6 @ Delancy-Clinton", url: "http://207.251.86.238/cctv361.jpg" } 
