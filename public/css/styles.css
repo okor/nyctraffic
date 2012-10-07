@@ -99,6 +99,16 @@ option {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d8d7d4', endColorstr='#b8b8b8',GradientType=0 ); /* IE6-9 */
 }
 
+#self_promotion {
+  text-align: center;
+  color: white;
+  font-size: 16px;
+  padding: 2em;
+}
+
+#self_promotion a {
+  color: white;
+}
 
 
 
