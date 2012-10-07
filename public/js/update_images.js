@@ -56,25 +56,21 @@ $(function(){
   ]
 
 
-
-  // $.each(images, function(index, val){
-  //     console.log(val)
-  // })
-
   var pause = false
   var interval_id = null
-  // var cam_template = "<div class='cam'><span>{{name}}</span><img src='{{url}}' /></div>"
-  var cam_template = "<div class='cam'><img src='{{url}}' /><span>{{name}}</span></div>"
+  var cam_template = "<div class='cam'><img src='{{url}}{{time}}' /><span>{{name}}</span></div>"
 
 
   function appendRender(){
+    var time = '?' + Date.now().toString()
     // Clear all old views
     $("#cams").html("")
     // Update view for each cam
     $.each(brooklyn_cams, function(index, cam){
         cam_details = {
           name: cam['name'],
-          url: cam['url']
+          url: cam['url'],
+          time: time
         }
       if (cam_details['url'] !== ""){
         html = Mustache.to_html(cam_template, cam_details)
@@ -84,6 +80,7 @@ $(function(){
   } 
 
   function start(){
+    appendRender()
     interval_id = setInterval(function(){
       appendRender()
     }, 5000)
@@ -93,11 +90,13 @@ $(function(){
     clearInterval(interval_id)
   }
 
-  function toggle_pause(){
+  function toggle_pause(button){
     if (pause == false){
+      $(button).removeClass('icon-pause').addClass('icon-play')
       pause = true
       clearInterval(interval_id)
     } else {
+      $(button).removeClass('icon-play').addClass('icon-pause')
       pause = false
       start()
     }
@@ -105,11 +104,10 @@ $(function(){
 
   // bind toggle_pause to pause button
   $("#pause").click(function(){
-    toggle_pause()
+    toggle_pause(this)
   })
 
   // Run it
-  appendRender()
   start()
 
 })
