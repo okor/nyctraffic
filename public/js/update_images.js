@@ -328,23 +328,22 @@ $(function(){
   var maxTitleLength = 20;
 
 
-  function appendRender(region){
+  function render(region){
     var time = '?' + Date.now().toString();
-    // Clear all old views
-    $('#cams').html('');
+    var html = [];
     // Update view for each cam
-    $.each(region, function(index, cam){
+    $.each(region, function(index, cam) {
       camDetails = {
         name: cam.name,
-        shortName: shortTitle(cam.name,maxTitleLength),
-        url: cam.url,
-        time: time
+        shortName: shortTitle(cam.name, maxTitleLength),
+        url: cam.url + time
       };
       if (camDetails.url !== ''){
-        var html = Mustache.to_html(camTemplate, camDetails);
-        $('#cams').append(html);
+        html.push( Mustache.to_html(camTemplate, camDetails) );
       }
     });
+
+    $('#cams').html(html.join(''));
   }
 
   function shortTitle(s,maxLength){
@@ -367,7 +366,7 @@ $(function(){
   function start(region, dimensions){
     console.log( region,dimensions )
 
-    appendRender(region);
+    render(region);
     updateImages(dimensions);
     intervalId = setInterval(function(){
       updateImages(dimensions);
