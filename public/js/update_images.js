@@ -1,7 +1,8 @@
 $(function(){
-  'use strict';
 
-  var brooklynCams = [
+
+  var regions = {};
+  regions['brooklyn'] = [
     { name: '6 Ave @ Flatbush Ave', url: 'http://207.251.86.238/cctv426.jpg' },
     { name: 'Adams @ Tillary', url: 'http://207.251.86.238/cctv89.jpg' },
     { name: 'Altantic Ave @ BQE', url: '' },
@@ -50,13 +51,12 @@ $(function(){
     { name: 'WBB-16 @ SOR Bklyn Kent Ave', url: 'http://207.251.86.238/cctv371.jpg' },
     { name: 'WBB-18 @ SOR Cntr Span', url: 'http://207.251.86.238/cctv373.jpg' },
     { name: 'WBB-19 @ Bklyn Tower', url: 'http://207.251.86.238/cctv374.jpg' },
-    // Shit right here is broke!
-    // { name: 'WBB-2 @ NOR Bklyn-Driggs', url: 'http://207.251.86.1.238/cctv357.jpg' },
+    { name: 'WBB-2 @ NOR Bklyn-Driggs', url: 'http://207.251.86.1.238/cctv357.jpg' },
     { name: 'WBB-4 @ NOR Bklyn-Mid Span', url: 'http://207.251.86.238/cctv359.jpg' },
     { name: 'WBB-6 @ Delancy-Clinton', url: 'http://207.251.86.238/cctv361.jpg' }
   ];
 
-  var manhattanCams = [
+  regions['manhattan'] = [
     { name: '1 Ave @ 14 St' , url: '' },
     { name: '1 Ave @ 79 St' , url: 'http://207.251.86.238/cctv252.jpg' },
     { name: '1 Ave @ 86 St' , url: '' },
@@ -197,7 +197,7 @@ $(function(){
     { name: 'York Ave @ 91 ST' , url: 'http://207.251.86.238/cctv195.jpg' },
   ];
 
-  var statenCams = [
+  regions['statenisland'] = [
     { name: 'Gower St WOF Manor Rd Underpass' , url: 'http://207.251.86.238/cctv140.jpg' },
     { name: 'Hylan Blvd @ New Dorp Lane' , url: 'http://207.251.86.238/cctv247.jpg' },
     { name: 'MLK Expy N of Forest Ave' , url: 'http://207.251.86.238/cctv273.jpg' },
@@ -221,7 +221,7 @@ $(function(){
     { name: 'West Shore Expy @ Arden Ave' , url: 'http://207.251.86.238/cctv347.jpg' },
   ];
 
-  var queensCams = [
+  regions['queens'] = [
     { name: 'Belt @ 225 St' , url: 'http://207.251.86.238/cctv117.jpg' },
     { name: 'Belt Pkwy @ 134 St' , url: 'http://207.251.86.238/cctv281.jpg' },
     { name: 'Belt Pkwy @ Brookville Blvd' , url: 'http://207.251.86.238/cctv335.jpg' },
@@ -288,7 +288,7 @@ $(function(){
     { name: 'Whitestone Nof Linden Pl' , url: 'http://207.251.86.238/cctv183.jpg' },
   ];
 
-  var bronxCams = [
+  regions['bronx'] = [
     { name: 'Bronx River Pkwy @ 233 ST' , url: 'http://207.251.86.238/cctv194.jpg' },
     { name: 'Bruckner Expy @ Bronx River Pkwy' , url: 'http://207.251.86.238/cctv35.jpg' },
     { name: 'Cross Bronx Expy @ E of Bronx River Pkwy' , url: 'http://207.251.86.238/cctv38.jpg' },
@@ -314,7 +314,9 @@ $(function(){
 
   var pause = false;
   var intervalId = null;
-  var region = brooklynCams;
+
+  var region = regions['manhattan'];
+
   var updateInterval = 3000;
   var camSizes = {
     small: ['176px','120px'],
@@ -324,7 +326,6 @@ $(function(){
   var selectedCamSize = camSizes.large;
   var camTemplate = '<div class="cam"><img src="{{url}}{{time}}" /><span title="{{name}}">{{shortName}}</span></div>';
   var maxTitleLength = 20;
-  // small = 20, medium = ?, large = ?
 
 
   function appendRender(region){
@@ -363,7 +364,9 @@ $(function(){
     });
   }
 
-  function start(region,dimensions){
+  function start(region, dimensions){
+    console.log( region,dimensions )
+
     appendRender(region);
     updateImages(dimensions);
     intervalId = setInterval(function(){
@@ -388,20 +391,21 @@ $(function(){
   }
 
   // bind togglePause to pause button
-  $('#pause').click(function(){
+  $('#pause').click(function(e){
+    e.preventDefault();
     togglePause(this);
   });
 
   // update the region
   $('#region_chooser').bind('change', function(){
-    region = eval( $(this).find('option:selected').val() );
+    region = regions[ $(this).find('option:selected').val() ];
     stop();
     start(region, selectedCamSize);
   });
 
   // update the update interval
   $('#interval_chooser').bind('change', function(){
-    updateInterval = eval( $(this).find('option:selected').val() );
+    updateInterval = $(this).find('option:selected').val();
     stop();
     start(region, selectedCamSize);
   });
